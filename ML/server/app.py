@@ -21,7 +21,7 @@ def index():
 @app.route('/getTrafficRoute', methods=['POST'])
 def traffic():
     data = request.get_json()
-    data_model = get_traffic_path(data['start'],data['end'],5)  # Call the function
+    data_model = get_traffic_path(data['start'],data['end'],1)  # Call the function
     # Use data_model as needed
     return jsonify({"Path":data_model})
 

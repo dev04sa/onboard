@@ -6263,30 +6263,29 @@ def get_congested_path_intra_ward(adjusted_distance_matrix,starts,ends,ward_numb
     
     if solution:
         indices=get_routes(data, manager, routing, solution)
-        print_solution(data, manager, routing, solution)
         graph=createGraph(indices)
-        print(graph)
-        route_bus=get_busRoute(start_ind,end_ind,graph)
-        print(route_bus)
+        route_bus=[]
         if len(route_bus)!=0:
             route=[]
             for i in range(len(route_bus)):
                 route.append(final_coordinates[ward_number-1][route_bus[i]])
             print(f"Route: {route}")
             return route
+        route_bus=get_busRoute(start_ind,end_ind,graph)
         route=[list(starts)]
         starting_index=0
         for i in range(len(indices)):
             if(starts in indices[i]):
                 starting_index=i
                 break
-        route.append(list(final_coordinates[ward_number-1][indices[i][0]]))
+        route.append(list(final_coordinates[ward_number-1][0]))
+        
         ending_index=0
         for i in range(len(indices)):
             if(ends in indices[i]):
                 ending_index=i
                 break
-        route.append(list(final_coordinates[ward_number-1][indices[i][0]]))
+        route.append(list(final_coordinates[ward_number-1][indices[ending_index][0]]))
         
         route.append(list(ends))
         return route
@@ -6301,7 +6300,7 @@ def get_congested_path(adjusted_distance_matrix,starts,ends,ward_number):
     
 
 def adjust_for_rush_hour(distance_matrix, congested_routes, rush_hour_multiplier):
-    adjusted_matrix = [row[:] for row in distance_matrix]  # Create a copy of the distance matrix
+    adjusted_matrix = [row[:] for row in distance_matrix] 
     for from_index, to_index in congested_routes:
         adjusted_matrix[from_index][to_index] *= rush_hour_multiplier
     return adjusted_matrix
