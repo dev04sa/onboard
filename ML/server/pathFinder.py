@@ -1,6 +1,3 @@
-"""Simple Vehicles Routing Problem."""
-
-
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 from UN import ward_data
@@ -6041,7 +6038,7 @@ def get_busRoute(start_node,end_node,graph):
                 newpath = get_traversal(node, end, path)
                 if newpath: return newpath
         return []
-    
+
     path = get_traversal(start_node, end_node)
     if path:
         return path
@@ -6312,3 +6309,238 @@ def get_traffic_path(starts,ends,ward_number):
     adjusted_distance_matrix = adjust_for_rush_hour(ward_data[ward_label]['distance_matrix'], congested_routes, rush_hour_multiplier) 
     return get_congested_path(adjusted_distance_matrix,starts,ends,ward_number)
     
+    
+    
+    
+    
+    
+    
+#Hops Logic
+
+def get_path_with_hops(starts, ends, max_hops):
+    """
+    Find path between start and end coordinates with maximum hop constraint.
+    
+    Args:
+        starts: Starting coordinates (lat, lon)
+        ends: Ending coordinates (lat, lon)  
+        max_hops: Maximum number of bus changes allowed
+        
+    Returns:
+        Route list or "Not Possible" if no path exists within hop limit
+    """
+    print(f"Finding path from {tuple(starts)} to {tuple(ends)} with max {max_hops} hops")
+    
+    # Check if coordinates exist in mapping
+    if tuple(starts) not in mapping or tuple(ends) not in mapping:
+        return "Not Possible"
+    
+    start_ward = eval(mapping[tuple(starts)])
+    end_ward = eval(mapping[tuple(ends)])
+    
+    # Same ward - direct route (0 hops for intra-ward)
+    if start_ward == end_ward:
+        if max_hops >= 0:  # Even 0 hops should allow intra-ward travel
+            return get_path_intra_ward(tuple(starts), tuple(ends), start_ward)
+        else:
+            return "Not Possible"
+    
+    # Different wards - need inter-ward travel
+    # Minimum hops for inter-ward is 1 (one bus change at hub)
+    if max_hops < 1:
+        return "Not Possible"
+    
+    # For inter-ward with 1 hop - direct connection via hubs
+    if max_hops == 1:
+        return get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
+    
+    # For more hops, we can use the standard inter-ward route
+    # (Future enhancement: implement multi-hop routing through intermediate wards)
+    return get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
+
+
+def get_path_with_hops_and_traffic(starts, ends, max_hops, ward_number):
+    """
+    Find path with hop constraint considering traffic conditions.
+    
+    Args:
+        starts: Starting coordinates
+        ends: Ending coordinates
+        max_hops: Maximum hops allowed
+        ward_number: Ward number for traffic calculation
+        
+    Returns:
+        Route list or "Not Possible"
+    """
+    print(f"Finding traffic-aware path with max {max_hops} hops")
+    
+    # Check basic feasibility first
+    if tuple(starts) not in mapping or tuple(ends) not in mapping:
+        return "Not Possible"
+    
+    start_ward = eval(mapping[tuple(starts)])
+    end_ward = eval(mapping[tuple(ends)])
+    
+    # Same ward with traffic consideration
+    if start_ward == end_ward and start_ward == ward_number:
+        if max_hops >= 0:
+            return get_traffic_path(starts, ends, ward_number)
+        else:
+            return "Not Possible"
+    
+    # Different wards - check if within hop limit
+    if start_ward != end_ward and max_hops < 1:
+        return "Not Possible"
+    
+    # For inter-ward travel, use standard routing
+    # (Traffic is only calculated for intra-ward in current implementation)
+    return get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
+
+
+def get_optimal_path_with_constraints(starts, ends, max_hops=None, consider_traffic=False, ward_number=None):
+    """
+    Main function to get optimal path with various constraints.
+    
+    Args:
+        starts: Starting coordinates
+        ends: Ending coordinates
+        max_hops: Maximum number of bus changes allowed (None for no limit)
+        consider_traffic: Whether to consider traffic conditions
+        ward_number: Ward number for traffic calculations (required if consider_traffic=True)
+        
+    Returns:
+        Dictionary with route information or error message
+    """
+    try:
+        # Input validation
+        if not isinstance(starts, (list, tuple)) or not isinstance(ends, (list, tuple)):
+            return {"status": "error", "message": "Invalid coordinate format"}
+        
+        if len(starts) != 2 or len(ends) != 2:
+            return {"status": "error", "message": "Coordinates must have latitude and longitude"}
+        
+        # Check if coordinates exist
+        if tuple(starts) not in mapping or tuple(ends) not in mapping:
+            return {"status": "error", "message": "Coordinates not found in system"}
+        
+        # Determine routing strategy based on constraints
+        if max_hops is not None:
+            if consider_traffic and ward_number is not None:
+                route = get_path_with_hops_and_traffic(starts, ends, max_hops, ward_number)
+            else:
+                route = get_path_with_hops(starts, ends, max_hops)
+        else:
+            # No hop constraint - use existing functions
+            if consider_traffic and ward_number is not None:
+                route = get_traffic_path(starts, ends, ward_number)
+            else:
+                route = get_path(starts, ends)
+        
+        # Process result
+        if route == "Not Possible" or route == "No Solution Found!":
+            return {
+                "status": "not_possible", 
+                "message": "No route found within specified constraints",
+                "constraints": {
+                    "max_hops": max_hops,
+                    "traffic_considered": consider_traffic
+                }
+            }
+        
+        # Calculate actual hops
+        actual_hops = calculate_hops(route, starts, ends)
+        
+        return {
+            "status": "success",
+            "route": route,
+            "hops": actual_hops,
+            "constraints": {
+                "max_hops": max_hops,
+                "traffic_considered": consider_traffic
+            },
+            "route_type": determine_route_type(starts, ends)
+        }
+        
+    except Exception as e:
+        return {"status": "error", "message": f"Route calculation failed: {str(e)}"}
+
+
+def calculate_hops(route, starts, ends):
+    """
+    Calculate the number of hops (bus changes) in a route.
+    
+    Args:
+        route: List of coordinates representing the route
+        starts: Starting coordinates
+        ends: Ending coordinates
+        
+    Returns:
+        Number of hops
+    """
+    if not route or len(route) < 2:
+        return 0
+    
+    # For intra-ward routes (same ward), typically 0 hops
+    start_ward = eval(mapping[tuple(starts)])
+    end_ward = eval(mapping[tuple(ends)])
+    
+    if start_ward == end_ward:
+        # Intra-ward: check if direct route or requires bus changes within ward
+        if len(route) == 2:  # Direct connection
+            return 0
+        else:
+            # Multiple stops within ward - count intermediate transportation hubs
+            return max(0, len(route) - 2)
+    else:
+        # Inter-ward: minimum 1 hop (change at hub), plus any additional changes
+        return max(1, len(route) - 2)
+
+
+def determine_route_type(starts, ends):
+    """Determine if route is intra-ward or inter-ward."""
+    start_ward = eval(mapping[tuple(starts)])
+    end_ward = eval(mapping[tuple(ends)])
+    
+    if start_ward == end_ward:
+        return f"intra_ward_{start_ward}"
+    else:
+        return f"inter_ward_{start_ward}_to_{end_ward}"
+
+
+def get_route_with_alternatives(starts, ends, max_hops_list=[0, 1, 2, 3]):
+    """
+    Get multiple route options with different hop constraints.
+    
+    Args:
+        starts: Starting coordinates
+        ends: Ending coordinates
+        max_hops_list: List of hop constraints to try
+        
+    Returns:
+        Dictionary with all possible routes
+    """
+    alternatives = {}
+    
+    for hops in max_hops_list:
+        result = get_optimal_path_with_constraints(starts, ends, max_hops=hops)
+        
+        if result["status"] == "success":
+            alternatives[f"{hops}_hops"] = {
+                "route": result["route"],
+                "actual_hops": result["hops"],
+                "feasible": True
+            }
+        else:
+            alternatives[f"{hops}_hops"] = {
+                "route": None,
+                "actual_hops": None,
+                "feasible": False,
+                "reason": result.get("message", "Not possible")
+            }
+    
+    return {
+        "start": starts,
+        "end": ends,
+        "alternatives": alternatives,
+        "route_type": determine_route_type(starts, ends)
+    }
