@@ -5989,9 +5989,9 @@ def get_routes(data, manager, routing, solution):
     return routes
 
 
-def print_solution(data, manager, routing, solution):
-    """Prints solution on console."""
-    print(f"Objective: {solution.ObjectiveValue()}")
+# def print_solution(data, manager, routing, solution):
+    # """Prints solution on console."""
+    # print(f"Objective: {solution.ObjectiveValue()}")
     max_route_distance = 0
     for vehicle_id in range(data["num_vehicles"]):
         index = routing.Start(vehicle_id)
@@ -6006,9 +6006,9 @@ def print_solution(data, manager, routing, solution):
             )
         plan_output += f"{manager.IndexToNode(index)}\n"
         plan_output += f"Distance of the route: {route_distance}m\n"
-        print(plan_output)
+        # print(plan_output)
         max_route_distance = max(route_distance, max_route_distance)
-    print(f"Maximum of the route distances: {max_route_distance}m")
+    # print(f"Maximum of the route distances: {max_route_distance}m")
     
 
 def createGraph(routes):
@@ -6031,7 +6031,7 @@ def get_busRoute(start_node,end_node,graph):
         if start == end:
             return path
         if start not in graph:
-            print("Not in graph")
+            # print("Not in graph")
             return []
         for node in graph[start]:
             if node not in path:
@@ -6043,7 +6043,7 @@ def get_busRoute(start_node,end_node,graph):
     if path:
         return path
     else:
-        print("No path exists between", start_node, "and", end_node)
+        # print("No path exists between", start_node, "and", end_node)
         return []
         
 def get_path_intra_ward(starts,ends,ward_number):
@@ -6054,12 +6054,12 @@ def get_path_intra_ward(starts,ends,ward_number):
             start_ind=i
         if final_coordinates[ward_number-1][i]==list(ends):
             end_ind=i
-    print(start_ind,end_ind)
-    print("\n\n")
+    # print(start_ind,end_ind)
+    # print("\n\n")
     ward_label="NW-"+mapping[starts]
-    print(ward_label)
+    # print(ward_label)
     transportation_data=ward_data[ward_label]['starts']
-    print(transportation_data)
+    # print(transportation_data)
     data = create_data_model(ward_number,len(transportation_data),transportation_data,transportation_data)
     
     manager = pywrapcp.RoutingIndexManager(
@@ -6096,16 +6096,16 @@ def get_path_intra_ward(starts,ends,ward_number):
     
     if solution:
         indices=get_routes(data, manager, routing, solution)
-        print_solution(data, manager, routing, solution)
+        # print_solution(data, manager, routing, solution)
         graph=createGraph(indices)
-        print(graph)
+        # print(graph)
         route_bus=get_busRoute(start_ind,end_ind,graph)
-        print(route_bus)
+        # print(route_bus)
         if len(route_bus)!=0:
             route=[]
             for i in range(len(route_bus)):
                 route.append(final_coordinates[ward_number-1][route_bus[i]])
-            print(f"Route: {route}")
+            # print(f"Route: {route}")
             return route
         route=[list(starts)]
         starting_index=0
@@ -6134,12 +6134,12 @@ def get_path_unique_ward(starts,ends,ward_number):
             start_ind=i
         if final_coordinates[ward_number-1][i]==list(ends):
             end_ind=i
-    print(start_ind,end_ind)
-    print("\n\n")
+    # print(start_ind,end_ind)
+    # print("\n\n")
     ward_label="NW-"+mapping[starts]
-    print(ward_label)
+    # print(ward_label)
     transportation_data=ward_data[ward_label]['starts']
-    print(transportation_data)
+    # print(transportation_data)
     data = create_data_model(ward_number,len(transportation_data),transportation_data,transportation_data)
     
     manager = pywrapcp.RoutingIndexManager(
@@ -6203,8 +6203,8 @@ def get_path_inter_ward(starts,ends,ward_number_start,ward_number_end):
     return route
 
 def get_path(starts,ends):
-    print(tuple(starts),tuple(ends))
-    print("\n\n")
+    # print(tuple(starts),tuple(ends))
+    # print("\n\n")
     if mapping[tuple(starts)]==mapping[tuple(ends)]:
         return get_path_intra_ward(tuple(starts),tuple(ends),eval(mapping[tuple(starts)]))
     return get_path_inter_ward(tuple(starts),tuple(ends),eval(mapping[tuple(starts)]),eval(mapping[tuple(ends)]))
@@ -6218,12 +6218,12 @@ def get_congested_path_intra_ward(adjusted_distance_matrix,starts,ends,ward_numb
             start_ind=i
         if final_coordinates[ward_number-1][i]==list(ends):
             end_ind=i
-    print(start_ind,end_ind)
-    print("\n\n")
+    # print(start_ind,end_ind)
+    # print("\n\n")
     ward_label="NW-"+mapping[starts]
-    print(ward_label)
+    # print(ward_label)
     transportation_data=ward_data[ward_label]['starts']
-    print(transportation_data)
+    # print(transportation_data)
     data = create_congested_data_model(len(transportation_data),transportation_data,transportation_data,adjusted_distance_matrix)
     
     manager = pywrapcp.RoutingIndexManager(
@@ -6266,7 +6266,7 @@ def get_congested_path_intra_ward(adjusted_distance_matrix,starts,ends,ward_numb
             route=[]
             for i in range(len(route_bus)):
                 route.append(final_coordinates[ward_number-1][route_bus[i]])
-            print(f"Route: {route}")
+            # print(f"Route: {route}")
             return route
         route_bus=get_busRoute(start_ind,end_ind,graph)
         route=[list(starts)]
@@ -6291,8 +6291,8 @@ def get_congested_path_intra_ward(adjusted_distance_matrix,starts,ends,ward_numb
 
 
 def get_congested_path(adjusted_distance_matrix,starts,ends,ward_number):
-    print(tuple(starts),tuple(ends))
-    print("\n\n")
+    # print(tuple(starts),tuple(ends))
+    # print("\n\n")
     return get_congested_path_intra_ward(adjusted_distance_matrix,tuple(starts),tuple(ends),ward_number)
     
 
@@ -6316,140 +6316,68 @@ def get_traffic_path(starts,ends,ward_number):
     
     
 #Hops Logic
-
 def get_path_with_hops(starts, ends, max_hops):
-    """
-    Find path between start and end coordinates with maximum hop constraint.
-    
-    Args:
-        starts: Starting coordinates (lat, lon)
-        ends: Ending coordinates (lat, lon)  
-        max_hops: Maximum number of bus changes allowed
-        
-    Returns:
-        Route list or "Not Possible" if no path exists within hop limit
-    """
-    print(f"Finding path from {tuple(starts)} to {tuple(ends)} with max {max_hops} hops")
-    
-    # Check if coordinates exist in mapping
     if tuple(starts) not in mapping or tuple(ends) not in mapping:
         return "Not Possible"
-    
     start_ward = eval(mapping[tuple(starts)])
     end_ward = eval(mapping[tuple(ends)])
-    
-    # Same ward - direct route (0 hops for intra-ward)
     if start_ward == end_ward:
-        if max_hops >= 0:  # Even 0 hops should allow intra-ward travel
+        if max_hops >= 0:
             return get_path_intra_ward(tuple(starts), tuple(ends), start_ward)
         else:
             return "Not Possible"
-    
-    # Different wards - need inter-ward travel
-    # Minimum hops for inter-ward is 1 (one bus change at hub)
     if max_hops < 1:
         return "Not Possible"
-    
-    # For inter-ward with 1 hop - direct connection via hubs
     if max_hops == 1:
         return get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
-    
-    # For more hops, we can use the standard inter-ward route
-    # (Future enhancement: implement multi-hop routing through intermediate wards)
-    return get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
-
+    res = get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
+    if len(res) <= max_hops:
+        return res
+    else:
+        return "Not Possible"
 
 def get_path_with_hops_and_traffic(starts, ends, max_hops, ward_number):
-    """
-    Find path with hop constraint considering traffic conditions.
-    
-    Args:
-        starts: Starting coordinates
-        ends: Ending coordinates
-        max_hops: Maximum hops allowed
-        ward_number: Ward number for traffic calculation
-        
-    Returns:
-        Route list or "Not Possible"
-    """
-    print(f"Finding traffic-aware path with max {max_hops} hops")
-    
-    # Check basic feasibility first
     if tuple(starts) not in mapping or tuple(ends) not in mapping:
         return "Not Possible"
-    
     start_ward = eval(mapping[tuple(starts)])
     end_ward = eval(mapping[tuple(ends)])
-    
-    # Same ward with traffic consideration
     if start_ward == end_ward and start_ward == ward_number:
         if max_hops >= 0:
             return get_traffic_path(starts, ends, ward_number)
         else:
             return "Not Possible"
-    
-    # Different wards - check if within hop limit
     if start_ward != end_ward and max_hops < 1:
         return "Not Possible"
-    
-    # For inter-ward travel, use standard routing
-    # (Traffic is only calculated for intra-ward in current implementation)
     return get_path_inter_ward(tuple(starts), tuple(ends), start_ward, end_ward)
 
-
 def get_optimal_path_with_constraints(starts, ends, max_hops=None, consider_traffic=False, ward_number=None):
-    """
-    Main function to get optimal path with various constraints.
-    
-    Args:
-        starts: Starting coordinates
-        ends: Ending coordinates
-        max_hops: Maximum number of bus changes allowed (None for no limit)
-        consider_traffic: Whether to consider traffic conditions
-        ward_number: Ward number for traffic calculations (required if consider_traffic=True)
-        
-    Returns:
-        Dictionary with route information or error message
-    """
     try:
-        # Input validation
         if not isinstance(starts, (list, tuple)) or not isinstance(ends, (list, tuple)):
             return {"status": "error", "message": "Invalid coordinate format"}
-        
         if len(starts) != 2 or len(ends) != 2:
             return {"status": "error", "message": "Coordinates must have latitude and longitude"}
-        
-        # Check if coordinates exist
         if tuple(starts) not in mapping or tuple(ends) not in mapping:
             return {"status": "error", "message": "Coordinates not found in system"}
-        
-        # Determine routing strategy based on constraints
         if max_hops is not None:
             if consider_traffic and ward_number is not None:
                 route = get_path_with_hops_and_traffic(starts, ends, max_hops, ward_number)
             else:
                 route = get_path_with_hops(starts, ends, max_hops)
         else:
-            # No hop constraint - use existing functions
             if consider_traffic and ward_number is not None:
                 route = get_traffic_path(starts, ends, ward_number)
             else:
                 route = get_path(starts, ends)
-        
-        # Process result
         if route == "Not Possible" or route == "No Solution Found!":
             return {
-                "status": "not_possible", 
+                "status": "not_possible",
                 "message": "No route found within specified constraints",
                 "constraints": {
                     "max_hops": max_hops,
                     "traffic_considered": consider_traffic
                 }
             }
-        
-        # Calculate actual hops
         actual_hops = calculate_hops(route, starts, ends)
-        
         return {
             "status": "success",
             "route": route,
@@ -6460,70 +6388,34 @@ def get_optimal_path_with_constraints(starts, ends, max_hops=None, consider_traf
             },
             "route_type": determine_route_type(starts, ends)
         }
-        
     except Exception as e:
         return {"status": "error", "message": f"Route calculation failed: {str(e)}"}
 
-
 def calculate_hops(route, starts, ends):
-    """
-    Calculate the number of hops (bus changes) in a route.
-    
-    Args:
-        route: List of coordinates representing the route
-        starts: Starting coordinates
-        ends: Ending coordinates
-        
-    Returns:
-        Number of hops
-    """
     if not route or len(route) < 2:
         return 0
-    
-    # For intra-ward routes (same ward), typically 0 hops
     start_ward = eval(mapping[tuple(starts)])
     end_ward = eval(mapping[tuple(ends)])
-    
     if start_ward == end_ward:
-        # Intra-ward: check if direct route or requires bus changes within ward
-        if len(route) == 2:  # Direct connection
+        if len(route) == 2:
             return 0
         else:
-            # Multiple stops within ward - count intermediate transportation hubs
             return max(0, len(route) - 2)
     else:
-        # Inter-ward: minimum 1 hop (change at hub), plus any additional changes
         return max(1, len(route) - 2)
 
-
 def determine_route_type(starts, ends):
-    """Determine if route is intra-ward or inter-ward."""
     start_ward = eval(mapping[tuple(starts)])
     end_ward = eval(mapping[tuple(ends)])
-    
     if start_ward == end_ward:
         return f"intra_ward_{start_ward}"
     else:
         return f"inter_ward_{start_ward}_to_{end_ward}"
 
-
 def get_route_with_alternatives(starts, ends, max_hops_list=[0, 1, 2, 3]):
-    """
-    Get multiple route options with different hop constraints.
-    
-    Args:
-        starts: Starting coordinates
-        ends: Ending coordinates
-        max_hops_list: List of hop constraints to try
-        
-    Returns:
-        Dictionary with all possible routes
-    """
     alternatives = {}
-    
     for hops in max_hops_list:
         result = get_optimal_path_with_constraints(starts, ends, max_hops=hops)
-        
         if result["status"] == "success":
             alternatives[f"{hops}_hops"] = {
                 "route": result["route"],
@@ -6537,10 +6429,179 @@ def get_route_with_alternatives(starts, ends, max_hops_list=[0, 1, 2, 3]):
                 "feasible": False,
                 "reason": result.get("message", "Not possible")
             }
-    
     return {
         "start": starts,
         "end": ends,
         "alternatives": alternatives,
         "route_type": determine_route_type(starts, ends)
     }
+
+import random
+import math
+
+def calculate_distance(coord1, coord2):
+    """Calculate Euclidean distance between two coordinates."""
+    return math.sqrt((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)
+
+def calculate_coverage(route, all_coordinates):
+    """Calculate what percentage of total bus stops are covered by this route."""
+    if not route or route == "Not Possible" or route == "No Solution Found!":
+        return 0
+    
+    route_stops = set()
+    for coord in route:
+        route_stops.add(tuple(coord))
+    
+    total_stops = len(all_coordinates)
+    covered_stops = len(route_stops)
+    
+    return (covered_stops / total_stops) * 100
+
+def analyze_coordinate_pairs():
+    """
+    Analyze 50 pairs of coordinates and generate a comprehensive table.
+    """
+    # Get all unique coordinates from the mapping
+    all_coords = list(mapping.keys())
+    
+    # Select 50 random pairs
+    random.seed(42)  # For reproducible results
+    pairs = []
+    
+    for i in range(50):
+        start = random.choice(all_coords)
+        end = random.choice(all_coords)
+        # Ensure start and end are different
+        while start == end:
+            end = random.choice(all_coords)
+        pairs.append((start, end))
+    
+    print("Bus Route Analysis Table")
+    print("=" * 120)
+    print(f"{'Name':<8} {'Start-X':<10} {'Start-Y':<10} {'End-X':<10} {'End-Y':<10} {'Distance':<10} {'Hops':<6} {'Max-Hops':<10} {'Coverage(%)':<12}")
+    print("-" * 120)
+    
+    # Test different max hop constraints
+    max_hops_options = [0, 1, 2, 3, 4]
+    
+    for i, (start, end) in enumerate(pairs):
+        pair_name = f"P{i+1:02d}"
+        
+        # Calculate direct distance
+        direct_distance = calculate_distance(start, end)
+        
+        # Try different hop constraints and find the best feasible route
+        best_route = None
+        best_hops = None
+        min_max_hops = None
+        
+        for max_hops in max_hops_options:
+            try:
+                result = get_optimal_path_with_constraints(
+                    starts=list(start), 
+                    ends=list(end), 
+                    max_hops=max_hops
+                )
+                
+                if result["status"] == "success":
+                    if best_route is None:
+                        best_route = result["route"]
+                        best_hops = result["hops"]
+                        min_max_hops = max_hops
+                    break
+            except Exception as e:
+                continue
+        
+        # If no route found with hop constraints, try without constraints
+        if best_route is None:
+            try:
+                best_route = get_path(list(start), list(end))
+                if best_route != "Not Possible" and best_route != "No Solution Found!":
+                    best_hops = calculate_hops(best_route, start, end)
+                    min_max_hops = "No Limit"
+                else:
+                    best_hops = "N/A"
+                    min_max_hops = "N/A"
+            except Exception as e:
+                best_hops = "Error"
+                min_max_hops = "Error"
+        
+        # Calculate coverage
+        coverage = calculate_coverage(best_route, all_coords)
+        
+        # Format the output
+        start_x = f"{start[0]:.6f}"
+        start_y = f"{start[1]:.6f}"
+        end_x = f"{end[0]:.6f}"
+        end_y = f"{end[1]:.6f}"
+        distance_str = f"{direct_distance:.6f}"
+        hops_str = str(best_hops) if best_hops != "N/A" else "N/A"
+        max_hops_str = str(min_max_hops) if min_max_hops != "N/A" else "N/A"
+        coverage_str = f"{coverage:.2f}"
+        
+        print(f"{pair_name:<8} {start_x:<10} {start_y:<10} {end_x:<10} {end_y:<10} {distance_str:<10} {hops_str:<6} {max_hops_str:<10} {coverage_str:<12}")
+    
+    print("-" * 120)
+    print("Legend:")
+    print("- Distance: Euclidean distance between start and end coordinates")
+    print("- Hops: Number of bus changes required for the optimal route")
+    print("- Max-Hops: Minimum hop constraint that allows a feasible route")
+    print("- Coverage: Percentage of total bus stops covered by the route")
+
+def detailed_route_analysis():
+    """
+    Provide detailed analysis with route information for a smaller set.
+    """
+    # Get sample coordinates
+    all_coords = list(mapping.keys())
+    random.seed(42)
+    sample_pairs = random.sample([(random.choice(all_coords), random.choice(all_coords)) for _ in range(10)], 10)
+    
+    print("\nDetailed Route Analysis (Sample of 10 pairs)")
+    print("=" * 100)
+    
+    for i, (start, end) in enumerate(sample_pairs):
+        if start == end:
+            continue
+            
+        print(f"\nPair {i+1}: {start} -> {end}")
+        print(f"Ward mapping: {mapping.get(start, 'Unknown')} -> {mapping.get(end, 'Unknown')}")
+        
+        # Get route with alternatives
+        try:
+            alternatives = get_route_with_alternatives(list(start), list(end), [0, 1, 2, 3])
+            
+            print(f"Route type: {alternatives['route_type']}")
+            
+            for hop_option, details in alternatives['alternatives'].items():
+                if details['feasible']:
+                    coverage = calculate_coverage(details['route'], all_coords)
+                    print(f"  {hop_option}: ✓ Feasible (Actual hops: {details['actual_hops']}, Coverage: {coverage:.1f}%)")
+                else:
+                    print(f"  {hop_option}: ✗ {details['reason']}")
+                    
+        except Exception as e:
+            print(f"  Error analyzing route: {str(e)}")
+
+# Additional utility function for statistics
+def generate_statistics():
+    """Generate summary statistics about the coordinate pairs analysis."""
+    all_coords = list(mapping.keys())
+    
+    # Ward distribution
+    ward_counts = {}
+    for coord in all_coords:
+        ward = mapping[coord]
+        ward_counts[ward] = ward_counts.get(ward, 0) + 1
+    
+    print("\nStatistics Summary")
+    print("=" * 50)
+    print(f"Total unique coordinates: {len(all_coords)}")
+    print(f"Total wards: {len(set(mapping.values()))}")
+    print(f"Average coordinates per ward: {len(all_coords) / len(set(mapping.values())):.1f}")
+    
+    print("\nWard distribution (top 10):")
+    sorted_wards = sorted(ward_counts.items(), key=lambda x: x[1], reverse=True)
+    for ward, count in sorted_wards[:10]:
+        print(f"  Ward {ward}: {count} coordinates")
+

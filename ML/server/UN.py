@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 ward_data = {
     'NW-1': {'distance_matrix': [
         [
