@@ -1,41 +1,41 @@
-Pair_ID,Start_X,Start_Y,End_X,End_Y,Start_Ward,End_Ward,Route_Type,Hop_Option,Feasible,Actual_Hops,Route_Length,Coverage_Percent,Reason
-D01,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,0_hops,False,N/A,0,0,No route found within specified constraints
-D01,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,1_hops,True,2,4,0.16,Success
-D01,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,2_hops,False,N/A,0,0,No route found within specified constraints
-D01,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,3_hops,False,N/A,0,0,No route found within specified constraints
-D02,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,0_hops,False,N/A,0,0,No route found within specified constraints
-D02,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,1_hops,True,2,4,0.16,Success
-D02,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,2_hops,False,N/A,0,0,No route found within specified constraints
-D02,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,3_hops,False,N/A,0,0,No route found within specified constraints
-D03,19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,0_hops,False,N/A,0,0,No route found within specified constraints
-D03,19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,1_hops,True,2,4,0.16,Success
-D03,19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,2_hops,False,N/A,0,0,No route found within specified constraints
-D03,19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,3_hops,False,N/A,0,0,No route found within specified constraints
-D04,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,0_hops,False,N/A,0,0,No route found within specified constraints
-D04,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,1_hops,True,2,4,0.16,Success
-D04,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,2_hops,False,N/A,0,0,No route found within specified constraints
-D04,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,3_hops,False,N/A,0,0,No route found within specified constraints
-D05,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,0_hops,False,N/A,0,0,No route found within specified constraints
-D05,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,1_hops,True,2,4,0.16,Success
-D05,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,2_hops,False,N/A,0,0,No route found within specified constraints
-D05,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,3_hops,False,N/A,0,0,No route found within specified constraints
-D06,19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,0_hops,False,N/A,0,0,No route found within specified constraints
-D06,19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,1_hops,True,2,4,0.16,Success
-D06,19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,2_hops,False,N/A,0,0,No route found within specified constraints
-D06,19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,3_hops,False,N/A,0,0,No route found within specified constraints
-D07,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,0_hops,False,N/A,0,0,No route found within specified constraints
-D07,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,1_hops,True,2,4,0.16,Success
-D07,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,2_hops,False,N/A,0,0,No route found within specified constraints
-D07,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,3_hops,False,N/A,0,0,No route found within specified constraints
-D08,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,0_hops,True,2,4,0.08,Success
-D08,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,1_hops,True,2,4,0.08,Success
-D08,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,2_hops,True,2,4,0.08,Success
-D08,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,3_hops,True,2,4,0.08,Success
-D09,19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,0_hops,False,N/A,0,0,No route found within specified constraints
-D09,19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,1_hops,True,2,4,0.16,Success
-D09,19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,2_hops,False,N/A,0,0,No route found within specified constraints
-D09,19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,3_hops,False,N/A,0,0,No route found within specified constraints
-D10,18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,0_hops,False,N/A,0,0,No route found within specified constraints
-D10,18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,1_hops,True,2,4,0.16,Success
-D10,18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,2_hops,False,N/A,0,0,No route found within specified constraints
-D10,18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,3_hops,False,N/A,0,0,No route found within specified constraints
+Pair_ID,Start_Bus_Stop_Name,End_Bus_Stop_Name,Start_X,Start_Y,End_X,End_Y,Start_Ward,End_Ward,Route_Type,Hop_Option,Feasible,Actual_Hops,Route_Length,Coverage_Percent,Reason
+D01,GADKARI QUARRY,SAIFEE HOSPITAL,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,0_hops,False,N/A,0,0,No route found within specified constraints
+D01,GADKARI QUARRY,SAIFEE HOSPITAL,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,1_hops,True,2,4,0.16,Success
+D01,GADKARI QUARRY,SAIFEE HOSPITAL,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,2_hops,False,N/A,0,0,No route found within specified constraints
+D01,GADKARI QUARRY,SAIFEE HOSPITAL,19.019748,72.907764,18.951701,72.818763,34,4,inter_ward_34_to_4,3_hops,False,N/A,0,0,No route found within specified constraints
+D02,KRISHNA NAGAR (SAKI NAKA),AIR INDIA QUARTERS,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,0_hops,False,N/A,0,0,No route found within specified constraints
+D02,KRISHNA NAGAR (SAKI NAKA),AIR INDIA QUARTERS,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,1_hops,True,2,4,0.16,Success
+D02,KRISHNA NAGAR (SAKI NAKA),AIR INDIA QUARTERS,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,2_hops,False,N/A,0,0,No route found within specified constraints
+D02,KRISHNA NAGAR (SAKI NAKA),AIR INDIA QUARTERS,19.099107,72.887859,19.080244,72.868692,20,32,inter_ward_20_to_32,3_hops,False,N/A,0,0,No route found within specified constraints
+D03,TURBHE NAKA (JANATA MARKET),SARDAR NAGAR NO.4 (GTB NAGAR),19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,0_hops,False,N/A,0,0,No route found within specified constraints
+D03,TURBHE NAKA (JANATA MARKET),SARDAR NAGAR NO.4 (GTB NAGAR),19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,1_hops,True,2,4,0.16,Success
+D03,TURBHE NAKA (JANATA MARKET),SARDAR NAGAR NO.4 (GTB NAGAR),19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,2_hops,False,N/A,0,0,No route found within specified constraints
+D03,TURBHE NAKA (JANATA MARKET),SARDAR NAGAR NO.4 (GTB NAGAR),19.069507,73.019087,19.035253,72.867406,25,21,inter_ward_25_to_21,3_hops,False,N/A,0,0,No route found within specified constraints
+D04,KHODADAD CIRCLE (DADAR TT),PEPSI GARDEN,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,0_hops,False,N/A,0,0,No route found within specified constraints
+D04,KHODADAD CIRCLE (DADAR TT),PEPSI GARDEN,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,1_hops,True,2,4,0.16,Success
+D04,KHODADAD CIRCLE (DADAR TT),PEPSI GARDEN,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,2_hops,False,N/A,0,0,No route found within specified constraints
+D04,KHODADAD CIRCLE (DADAR TT),PEPSI GARDEN,19.015113,72.845599,19.229847,72.823339,8,30,inter_ward_8_to_30,3_hops,False,N/A,0,0,No route found within specified constraints
+D05,BHOIWADA/MANE MASTER CHK,SRUSHTI POLICE CHOWKY,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,0_hops,False,N/A,0,0,No route found within specified constraints
+D05,BHOIWADA/MANE MASTER CHK,SRUSHTI POLICE CHOWKY,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,1_hops,True,2,4,0.16,Success
+D05,BHOIWADA/MANE MASTER CHK,SRUSHTI POLICE CHOWKY,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,2_hops,False,N/A,0,0,No route found within specified constraints
+D05,BHOIWADA/MANE MASTER CHK,SRUSHTI POLICE CHOWKY,19.00541,72.844779,19.271178,72.867759,8,11,inter_ward_8_to_11,3_hops,False,N/A,0,0,No route found within specified constraints
+D06,CHAINANI ELDER S HOME,"SIKKA NAGAR, GANPATI MANDIR",19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,0_hops,False,N/A,0,0,No route found within specified constraints
+D06,CHAINANI ELDER S HOME,"SIKKA NAGAR, GANPATI MANDIR",19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,1_hops,False,N/A,0,0,No route found within specified constraints
+D06,CHAINANI ELDER S HOME,"SIKKA NAGAR, GANPATI MANDIR",19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,2_hops,False,N/A,0,0,No route found within specified constraints
+D06,CHAINANI ELDER S HOME,"SIKKA NAGAR, GANPATI MANDIR",19.166687,72.963648,18.956077,72.823412,10,4,inter_ward_10_to_4,3_hops,False,N/A,0,0,No route found within specified constraints
+D07,PETIT HALL,SAYANI MARG,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,0_hops,False,N/A,0,0,No route found within specified constraints
+D07,PETIT HALL,SAYANI MARG,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,1_hops,True,2,4,0.16,Success
+D07,PETIT HALL,SAYANI MARG,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,2_hops,False,N/A,0,0,No route found within specified constraints
+D07,PETIT HALL,SAYANI MARG,18.955235,72.798631,19.010613,72.831516,4,33,inter_ward_4_to_33,3_hops,False,N/A,0,0,No route found within specified constraints
+D08,GOL BUILDING (KURLA-W),MOHAMMAD ESTATE,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,0_hops,True,2,4,0.08,Success
+D08,GOL BUILDING (KURLA-W),MOHAMMAD ESTATE,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,1_hops,True,2,4,0.08,Success
+D08,GOL BUILDING (KURLA-W),MOHAMMAD ESTATE,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,2_hops,True,2,4,0.08,Success
+D08,GOL BUILDING (KURLA-W),MOHAMMAD ESTATE,19.067446,72.874998,19.073632,72.871204,32,32,intra_ward_32,3_hops,True,2,4,0.08,Success
+D09,MERCHANT BROTHERS,GAIMUKH (GHODBUNDER RD),19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,0_hops,False,N/A,0,0,No route found within specified constraints
+D09,MERCHANT BROTHERS,GAIMUKH (GHODBUNDER RD),19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,1_hops,True,2,4,0.16,Success
+D09,MERCHANT BROTHERS,GAIMUKH (GHODBUNDER RD),19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,2_hops,False,N/A,0,0,No route found within specified constraints
+D09,MERCHANT BROTHERS,GAIMUKH (GHODBUNDER RD),19.20757,72.824812,19.285021,72.936203,23,24,inter_ward_23_to_24,3_hops,False,N/A,0,0,No route found within specified constraints
+D10,BHULESHWAR,LIC OFFICE (BORIVALI -W),18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,0_hops,False,N/A,0,0,No route found within specified constraints
+D10,BHULESHWAR,LIC OFFICE (BORIVALI -W),18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,1_hops,True,2,4,0.16,Success
+D10,BHULESHWAR,LIC OFFICE (BORIVALI -W),18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,2_hops,False,N/A,0,0,No route found within specified constraints
+D10,BHULESHWAR,LIC OFFICE (BORIVALI -W),18.952803,72.830032,19.242522,72.852043,4,35,inter_ward_4_to_35,3_hops,False,N/A,0,0,No route found within specified constraints

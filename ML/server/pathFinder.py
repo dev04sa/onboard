@@ -1,6 +1,8 @@
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 from UN import ward_data
+import pandas as pd
+import os
 
 mapping={(18.895411, 72.810354): '19',
  (18.900103, 72.813918): '19',
@@ -5953,6 +5955,47 @@ distance_matrix=[[0,
 
 routesFormed=False
 
+def load_bus_stop_mapping():
+    """
+    Load bus stop names and create coordinate-to-name mapping
+    """
+    try:
+        # Get the dataset path
+        dataset_path = os.path.join(os.path.dirname(__file__), '..', 'Dataset', 'bus_stops_with_wards.csv')
+        df = pd.read_csv(dataset_path)
+        
+        bus_stop_mapping = {}
+        for _, row in df.iterrows():
+            coord = (float(row['latitude']), float(row['longitude']))
+            bus_stop_mapping[coord] = row['name'].strip().strip('"')
+            
+        return bus_stop_mapping
+    except Exception as e:
+        print(f"Error loading bus stop mapping: {e}")
+        return {}
+        
+def find_nearest_bus_stop(target_coord, bus_stop_mapping, threshold=0.001):
+    """
+    Find the nearest bus stop name for given coordinates.
+    """
+    if target_coord in bus_stop_mapping:
+        return bus_stop_mapping[target_coord]
+        
+    # Find the nearest bus stop withing threshold
+    min_distance = float('inf')
+    nearest_stop = None
+    
+    for stop_coord, stop_name in bus_stop_mapping.items():
+        distance = ((target_coord[0] - stop_coord[0]) ** 2 + (target_coord[1] - stop_coord[1]) ** 2) ** 0.5
+        if distance < min_distance and distance < threshold:
+            min_distance = distance
+            nearest_stop = stop_name
+            
+    # If no nearby stop found, create a name from coordinates
+    if nearest_stop is None:
+        return f"Stop_{target_coord[0]:.4f}_{target_coord[1]:.4f}"
+
+
 
 def create_congested_data_model(num_vehicles,starts,ends,adjusted_distance_matrix):
     data = {}
@@ -6605,3 +6648,62 @@ def generate_statistics():
     for ward, count in sorted_wards[:10]:
         print(f"  Ward {ward}: {count} coordinates")
 
+def get_standard_and_min_hop_routes(start_coord, end_coord):
+    """
+    Get both standart route and minimum hop route for comparison
+    """
+    
+    result = {
+        'standard_route' : {
+            'distance': 0,
+            'hops': 'N/A',
+            'feasible': False,
+            'route': None
+        },
+        'min_hop_route': {
+            'distance': 0,
+            'hops': 'N/A',
+            'feasible': False,
+            'route': None
+        }
+    }
+    
+    # Calculate direst distance
+    direct_distance = calculate_distance(start_coord, end_coord)
+    
+    # Try to get standard route (no hop constraint)
+    try:
+        standard_route = get_path(list(start_coord), list(end_coord))
+        if standard_route != "Not Possible" and standard_route != "No Solution Found!":
+            standard_hop = calculate_hops(standard_route, start_coord, end_coord)
+            result['standard_route'] = {
+                'distance': direct_distance,
+                'hops': standard_hops,
+                'feasible': True,
+                'route': standard_route
+            }
+    except Exception as e:
+        pass
+    
+    # Try to get minimum hop route (try different hop contraints)
+    for max_hops in [0, 1, 2, 3]:
+        try:
+            min_hop_result = get_optimal_path_with_constraints(
+                starts = list(start_coord),
+                ends = list(end_coord),
+                max_hops = max_hops
+            )
+            
+            if min_hop_result['status'] == "success":
+                result['min_hop_route'] = {
+                    'distance': direct_distance,
+                    'hops': min_hop_result['hops'],
+                    'feasible': True,
+                    'route': min_hop_result['route']
+                }
+                break
+        except Exception as e:
+            continue
+    
+    return result
+BUS_STOP_MAPPING = load_bus_stop_mapping()
